@@ -1,5 +1,6 @@
 import nltk
 import string
+import pandas
 from nltk.sentiment import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -24,7 +25,7 @@ def preprocess_text(text):
     
     return text
 
-# Step 2: Sentiment Analysis
+# Sentiment Analysis
 def analyze_sentiment(text):
     sid = SentimentIntensityAnalyzer()
     sentiment_scores = sid.polarity_scores(text)
@@ -70,7 +71,7 @@ def generate_recommendations(key_phrases):
     return recommendations
 
 # Sample data
-reviews = [
+'''reviews = [
     "The battery life is too short.",
     "The user interface is confusing.",
     "The product is excellent and highly recommended.",
@@ -78,7 +79,10 @@ reviews = [
     "The price is too high for the features offered.",
     "The battery drains quickly.",
     "The software crashes frequently."
-]
+]'''
+
+reviews=pandas.read_csv("az-reviews.csv")
+print(reviews)
 
 # Preprocess 
 preprocessed_reviews = [preprocess_text(review) for review in reviews]
@@ -95,10 +99,6 @@ key_phrases = extract_key_phrases(lda_model, vectorizer)
 
 # recommendations
 recommendations = generate_recommendations(key_phrases)
-print(recommendations)
-print(key_phrases)
-print(sentiments)
-print(reviews)
 
 # output
 for i, review in enumerate(reviews):
